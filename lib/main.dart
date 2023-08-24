@@ -7,12 +7,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_sixvalley_ecommerce/provider/district_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/facebook_login_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/featured_deal_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/google_sign_in_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/home_category_product_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/location_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/top_seller_provider.dart';
+import 'package:flutter_sixvalley_ecommerce/provider/upazila_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/wallet_transaction_provider.dart';
 import 'package:flutter_sixvalley_ecommerce/view/screen/order/order_details_screen.dart';
 import 'package:flutter_sixvalley_ecommerce/provider/auth_provider.dart';
@@ -76,6 +78,8 @@ Future<void> main() async {
 
   runApp(MultiProvider(
     providers: [
+      ChangeNotifierProvider(create: (_) => DistrictProvider()),
+      ChangeNotifierProvider(create: (_) => UpazilaProvider()),
       ChangeNotifierProvider(create: (context) => di.sl<CategoryProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<HomeCategoryProductProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<TopSellerProvider>()),

@@ -110,7 +110,11 @@ class SearchWidget extends StatelessWidget {
               onTap: (){
                 if(controller.text.trim().isNotEmpty) {
                   Provider.of<SearchProvider>(context, listen: false).saveSearchAddress( controller.text.toString());
-                  Provider.of<SearchProvider>(context, listen: false).searchProduct( controller.text.toString(), context);
+                  Provider.of<SearchProvider>(context, listen: false).searchProduct(
+                      controller.text.toString(),
+                      Provider.of<SearchProvider>(context, listen: false).districtId.toString(),
+                      Provider.of<SearchProvider>(context, listen: false).upazilaId.toString(),
+                      context);
                 }else{
                   showCustomSnackBar(getTranslated('enter_somethings', context), context);
 

@@ -14,6 +14,11 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 
+import '../../../data/model/response/district_model.dart';
+import '../../../data/model/response/upazila_model.dart';
+import '../../../provider/district_provider.dart';
+import '../../../provider/upazila_provider.dart';
+
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
 
@@ -23,12 +28,15 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   TextEditingController searchController = TextEditingController();
-   String? selectedDivision;
-   String? selectedDistrict;
-   String? selectedUpazila;
-   List<String> divisions = ['gfgf', 'hgfh', 'gffg','gfhf'];
-   List<String> districts = ['gfgf', 'hgfh', 'gffg','gfhf'];
-   List<String> upazilas = ['gfgf', 'hgfh', 'gffg','gfhf'];
+  int? selectedDistrictId;
+  Upazila? selectedUpazila;
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<DistrictProvider>().fetchDistricts();
+  }
+
   @override
   Widget build(BuildContext context) {
     Provider.of<SearchProvider>(context, listen: false).cleanSearchProduct();
@@ -63,43 +71,70 @@ class _SearchScreenState extends State<SearchScreen> {
                         ],
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 30.0, right: 30),
+                        padding: const EdgeInsets.only(left: 22.0, right: 20),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            DropdownButton<String>(
-                              value: selectedDivision,
-                              hint: Text('Select division'),
-                              items: divisions.map((division) => DropdownMenuItem(value: division,
-                                  child: Text(division))).toList(),
-                              onChanged: (value){
-                                setState(() {
-                                  selectedDivision = value;
-                                  selectedDistrict = null;
-                                  selectedUpazila = null;
-                                  districts.clear;
-                                  upazilas.clear;
-                                });
-                              },
-                            ),
-                            SizedBox(width: 12,),
-                            DropdownButton<String>(
-                              value: selectedDivision,
-                              hint: Text('Select division'),
-                              items: divisions.map((division) => DropdownMenuItem(value: division,
-                                  child: Text(division))).toList(),
-                              onChanged: (value){
-                                setState(() {
-                                  selectedDivision = value;
-                                  selectedDistrict = null;
-                                  selectedUpazila = null;
-                                  districts.clear;
-                                  upazilas.clear;
-                                });
-                              },
-                            ),
-                          ],
-                        ),
+                            children: [
+                              Expanded(child:
+                              Consumer<DistrictProvider>(
+                                builder: (context, districtProvider, _) {
+                                  return DropdownButton<int>(
+                                    value: selectedDistrictId,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedDistrictId = value;
+                                        Provider.of<SearchProvider>(context, listen: false).setDistrictId(value.toString());
+                                        selectedUpazila = null; // Reset selected upazila
+                                        context.read<UpazilaProvider>().fetchUpazilas(value!);
+                                      });
+                                    },
+                                    hint: Text('Select District'),
+                                    items: [
+                                      DropdownMenuItem<int>(
+                                        value: null,
+                                        child: Text('Select District'),
+                                      ),
+                                      ...districtProvider.districts.map((District district) {
+                                        return DropdownMenuItem<int>(
+                                          value: district.id,
+                                          child: Text(district.district),
+                                        );
+                                      }),
+                                    ],
+                                  );
+                                },
+                              ),
+                              ),
+                              SizedBox(width: 10,),
+                              Expanded(
+                                child:
+                                Consumer<UpazilaProvider>(
+                                  builder: (context, upazilaProvider, _) {
+                                    return DropdownButton<Upazila>(
+                                      value: selectedUpazila,
+                                      onChanged: (value) {
+                                        setState(() {
+                                          selectedUpazila = value;
+                                          Provider.of<SearchProvider>(context, listen: false).setUpazilaId(value!.id.toString());
+                                        });
+                                      },
+                                      hint: Text('Select Upazila'),
+                                      items: [
+                                        DropdownMenuItem<Upazila>(
+                                          value: null,
+                                          child: Text('Select Upazila'),
+                                        ),
+                                        ...upazilaProvider.upazilas.map((Upazila upazila) {
+                                          return DropdownMenuItem<Upazila>(
+                                            value: upazila,
+                                            child: Text(upazila.upazila),
+                                          );
+                                        }),
+                                      ],
+                                    );
+                                  },
+                                ),
+                              ),
+                            ]),
                       ),
                     ],
                   ),
@@ -123,7 +158,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('enter_somethings'), backgroundColor: ColorResources.getRed(context)));
 
                           }else{
-                            Provider.of<SearchProvider>(context, listen: false).searchProduct(text, context);
+                            print(text+"---->"+Provider.of<SearchProvider>(context, listen: false).districtId.toString()+"---->"+Provider.of<SearchProvider>(context, listen: false).upazilaId.toString());
+                            Provider.of<SearchProvider>(context, listen: false).searchProduct(text, selectedDistrictId.toString(), selectedUpazila!.id.toString(), context);
                             Provider.of<SearchProvider>(context, listen: false).saveSearchAddress(text);
                           }},
                         onClearPressed: () => Provider.of<SearchProvider>(context, listen: false).cleanSearchProduct(),
@@ -172,7 +208,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               itemBuilder: (context, index) => Container(
                                   alignment: Alignment.center,
                                   child: InkWell(
-                                    onTap: () => Provider.of<SearchProvider>(context, listen: false).searchProduct(searchProvider.historyList[index], context),
+                                    onTap: () => Provider.of<SearchProvider>(context, listen: false).searchProduct(searchProvider.historyList[index], selectedDistrictId.toString(), selectedUpazila!.id.toString(), context),
                                     borderRadius: BorderRadius.circular(5),
                                     child: Container(
                                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),

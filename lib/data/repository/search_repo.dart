@@ -12,7 +12,7 @@ class SearchRepo {
   final SharedPreferences? sharedPreferences;
   SearchRepo({required this.dioClient, required this.sharedPreferences});
 
-  Future<ApiResponse> getSearchProductList(String query) async {
+  Future<ApiResponse> getSearchProductList(String query, String districtId, String upazilaId) async {
     try {
       final response = await dioClient!.get(AppConstants.searchUri + base64.encode(utf8.encode(query)));
       return ApiResponse.withSuccess(response);

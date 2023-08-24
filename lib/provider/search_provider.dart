@@ -52,15 +52,27 @@ class SearchProvider with ChangeNotifier {
   List<Product>? _filterProductList;
   bool _isClear = true;
   String _searchText = '';
+  String? _districtId;
+  String? _upazilaId;
 
   List<Product>? get searchProductList => _searchProductList;
   List<Product>? get filterProductList => _filterProductList;
+  String? get districtId => _districtId;
+  String? get upazilaId => _upazilaId;
   bool get isClear => _isClear;
   String get searchText => _searchText;
 
   void setSearchText(String text) {
     _searchText = text;
     notifyListeners();
+  }
+
+  void setDistrictId (String? setValue){
+    _districtId = setValue;
+  }
+
+  void setUpazilaId (String? setValue){
+    _upazilaId = setValue;
   }
 
   void cleanSearchProduct() {
@@ -70,14 +82,14 @@ class SearchProvider with ChangeNotifier {
     // notifyListeners();
   }
 
-  void searchProduct(String query, BuildContext context) async {
+  void searchProduct(String query, String districtId, String upazilaId, BuildContext context) async {
     _searchText = query;
     _isClear = false;
     _searchProductList = null;
     _filterProductList = null;
     notifyListeners();
 
-    ApiResponse apiResponse = await searchRepo!.getSearchProductList(query);
+    ApiResponse apiResponse = await searchRepo!.getSearchProductList(query, districtId, upazilaId);
     if (apiResponse.response != null && apiResponse.response!.statusCode == 200) {
       if (query.isEmpty) {
         _searchProductList = [];
