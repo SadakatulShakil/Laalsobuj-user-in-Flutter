@@ -158,6 +158,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             //ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('enter_somethings'), backgroundColor: ColorResources.getRed(context)));
 
                           }else{
+                            setState(() {
+                              selectedDistrictId = null;
+                              selectedUpazila = null;
+                            });
                             print(text+"---->"+Provider.of<SearchProvider>(context, listen: false).districtId.toString()+"---->"+Provider.of<SearchProvider>(context, listen: false).upazilaId.toString());
                             Provider.of<SearchProvider>(context, listen: false).searchProduct(text, selectedDistrictId.toString(), selectedUpazila!.id.toString(), context);
                             Provider.of<SearchProvider>(context, listen: false).saveSearchAddress(text);

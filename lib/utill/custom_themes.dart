@@ -38,6 +38,12 @@ const robotoRegular = TextStyle(
   fontFamily: 'Ubuntu',
   fontSize: Dimensions.fontSizeDefault,
 );
+const robotoWarning = TextStyle(
+    fontFamily: 'Ubuntu',
+    fontWeight: FontWeight.w400,
+    fontSize: Dimensions.fontSizeSmall,
+    color: Colors.red
+);
 
 const robotoBold = TextStyle(
   fontFamily: 'Ubuntu',

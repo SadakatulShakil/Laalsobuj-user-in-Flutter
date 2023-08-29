@@ -137,7 +137,12 @@ class SignInWidgetState extends State<SignInWidget> {
                 )),
 
 
-
+            Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: Text('NOTE: please enter phone number with country code. ex: 8801787878787',
+                style: robotoWarning,),
+            ),
+            SizedBox(height: 8,),
             Container(
                 margin:
                 const EdgeInsets.only(bottom: Dimensions.marginSizeDefault),

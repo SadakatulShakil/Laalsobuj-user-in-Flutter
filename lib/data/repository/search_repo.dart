@@ -14,12 +14,23 @@ class SearchRepo {
 
   Future<ApiResponse> getSearchProductList(String query, String districtId, String upazilaId) async {
     try {
-      final response = await dioClient!.get(AppConstants.searchUri + base64.encode(utf8.encode(query)));
+      final formData = {
+        'district_id': districtId,
+        'upazila_id': upazilaId,
+      };
+
+      final response = await dioClient!.post(
+        AppConstants.searchUri + base64.encode(utf8.encode(query)),
+        data: formData,
+      );
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
+
+
+
 
   // for save home address
   Future<void> saveSearchAddress(String searchAddress) async {
