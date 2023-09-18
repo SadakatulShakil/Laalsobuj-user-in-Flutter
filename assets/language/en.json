@@ -58,7 +58,7 @@
   "ADDRESS_FIELD_MUST_BE_REQUIRED": "Address field is required",
   "CITY_FIELD_MUST_BE_REQUIRED": "City field is required",
   "ZIPCODE_FIELD_MUST_BE_REQUIRED": "ZipCode field is required",
-  "EMAIL_MUST_BE_REQUIRED": "Email field is required",
+  "EMAIL_MUST_BE_REQUIRED": "Email or Phone field is required",
   "SELECT_ADDRESS_TYPE": "Select Address Type",
   "PHONE_MUST_BE_REQUIRED": "Phone number is required",
   "PASSWORD_MUST_BE_REQUIRED": "Password field is required",

@@ -79,7 +79,7 @@ class FeaturedDealsView extends StatelessWidget {
 
                             Text(
                               featuredDealProvider.featuredDealProductList[index].name!,
-                              style: robotoRegular.copyWith(height: 1.3,fontSize: Dimensions.fontSizeSmall),
+                              style: robotoRegular.copyWith(height: 1,fontSize: Dimensions.fontSizeSmall),
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                             ),

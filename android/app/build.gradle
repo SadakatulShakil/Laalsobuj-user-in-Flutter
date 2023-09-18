@@ -47,7 +47,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.u6amtech.flutter_sixvalley_ecom"
+        applicationId "com.comjagatltd.laalsobuj.user_app"
         minSdkVersion 21
         targetSdkVersion 32
         versionCode flutterVersionCode.toInteger()
@@ -66,10 +66,7 @@ android {
 
     buildTypes {
         release {
-//            signingConfig signingConfigs.release
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
     }
 }

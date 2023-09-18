@@ -1,3 +1,4 @@
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_sixvalley_ecommerce/data/model/body/login_model.dart';
 import 'package:flutter_sixvalley_ecommerce/localization/language_constrants.dart';
@@ -17,6 +18,7 @@ import 'package:flutter_sixvalley_ecommerce/view/screen/auth/widget/social_login
 import 'package:flutter_sixvalley_ecommerce/view/screen/dashboard/dashboard_screen.dart';
 import 'package:provider/provider.dart';
 
+import 'code_picker_widget.dart';
 import 'otp_verification_screen.dart';
 
 class SignInWidget extends StatefulWidget {
@@ -31,9 +33,14 @@ class SignInWidgetState extends State<SignInWidget> {
   TextEditingController? _passwordController;
   GlobalKey<FormState>? _formKeyLogin;
 
+  String? _countryDialCode = "+880";
+  String? _phoneNumber;
   @override
   void initState() {
     super.initState();
+    Provider.of<SplashProvider>(context,listen: false).configModel;
+    _countryDialCode = CountryCode.fromCountryCode(Provider.of<SplashProvider>(context, listen: false).configModel!.countryCode!).dialCode;
+    print("jjjjjjjjjjjjjjj: "+_countryDialCode.toString());
     _formKeyLogin = GlobalKey<FormState>();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
@@ -50,16 +57,24 @@ class SignInWidgetState extends State<SignInWidget> {
 
   final FocusNode _emailNode = FocusNode();
   final FocusNode _passNode = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
   LoginModel loginBody = LoginModel();
 
   void loginUser() async {
     if (_formKeyLogin!.currentState!.validate()) {
       _formKeyLogin!.currentState!.save();
 
-      String email = _emailController!.text.trim();
+      if(_emailController!.text.trim().startsWith('0')){
+        _phoneNumber = _emailController!.text.trim().substring(1);
+      }else{
+        _phoneNumber = _emailController!.text.trim();
+      }
+      String email = _countryDialCode!.substring(1)+_phoneNumber!;
       String password = _passwordController!.text.trim();
+      print("check number: "+email);
 
       if (email.isEmpty) {
+        print("check number: "+email);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(getTranslated('EMAIL_MUST_BE_REQUIRED', context)!),
           backgroundColor: Colors.red,
@@ -70,7 +85,7 @@ class SignInWidgetState extends State<SignInWidget> {
           backgroundColor: Colors.red,
         ));
       } else {
-
+        print("check number: "+email);
         if (Provider.of<AuthProvider>(context, listen: false).isRemember!) {
           Provider.of<AuthProvider>(context, listen: false).saveUserEmail(email, password);
         } else {
@@ -124,24 +139,55 @@ class SignInWidgetState extends State<SignInWidget> {
           padding: const EdgeInsets.symmetric(vertical: Dimensions.paddingSizeSmall),
           children: [
 
-
             Container(
-                margin:
-                const EdgeInsets.only(bottom: Dimensions.marginSizeSmall),
-                child: CustomTextField(
-                  hintText: getTranslated('ENTER_YOUR_EMAIL_or_mobile', context),
-                  focusNode: _emailNode,
-                  nextNode: _passNode,
-                  textInputType: TextInputType.emailAddress,
+              margin: const EdgeInsets.only(left: Dimensions.marginSizeDefault,
+                  right: Dimensions.marginSizeDefault, top: Dimensions.marginSizeSmall),
+              child: Row(children: [
+                CodePickerWidget(
+                  onChanged: (CountryCode countryCode) {
+                    _countryDialCode = countryCode.dialCode;
+                  },
+                  initialSelection: _countryDialCode,
+                  favorite: [_countryDialCode!],
+                  showDropDownButton: true,
+                  padding: EdgeInsets.zero,
+                  showFlagMain: true,
+                  textStyle: TextStyle(color: Theme.of(context).textTheme.displayLarge!.color),
+
+                ),
+
+
+
+                Expanded(child: CustomTextField(
+                  hintText: getTranslated('ENTER_MOBILE_NUMBER', context),
                   controller: _emailController,
+                  focusNode: _emailNode,
+                  nextNode: _passwordFocus,
+                  isPhoneNumber: true,
+                  textInputAction: TextInputAction.next,
+                  textInputType: TextInputType.phone,
+
                 )),
-
-
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text('NOTE: please enter phone number with country code. ex: 8801787878787',
-                style: robotoWarning,),
+              ]),
             ),
+
+            // Container(
+            //     margin:
+            //     const EdgeInsets.only(bottom: Dimensions.marginSizeSmall),
+            //     child: CustomTextField(
+            //       hintText: getTranslated('ENTER_YOUR_EMAIL_or_mobile', context),
+            //       focusNode: _emailNode,
+            //       nextNode: _passNode,
+            //       textInputType: TextInputType.emailAddress,
+            //       controller: _emailController,
+            //     )),
+            //
+            //
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 8.0),
+            //   child: Text('NOTE: please enter phone number with country code. ex: 8801787878787',
+            //     style: robotoWarning,),
+            // ),
             SizedBox(height: 8,),
             Container(
                 margin:

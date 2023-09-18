@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.u6amtech.flutter_sixvalley_ecom"
+    package="com.comjagatltd.laalsobuj.user_app"
     android:targetSandboxVersion="1">
 
     <uses-permission android:name="android.permission.INTERNET"/>

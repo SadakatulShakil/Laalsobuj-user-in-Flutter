@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:975837518429:android:a7f94ac8a6f89cf49f0bb4",
         "android_client_info": {
-          "package_name": "com.u6amtech.flutter_sixvalley_ecom"
+          "package_name": "com.comjagatltd.laalsobuj.user_app"
         }
       },
       "oauth_client": [
@@ -45,7 +45,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:975837518429:android:fbc733fa3067679b9f0bb4",
         "android_client_info": {
-          "package_name": "com.u6amtech.flutter_sixvalley_ecommerce"
+          "package_name": "com.comjagatltd.laalsobuj.user_appmerce"
         }
       },
       "oauth_client": [
@@ -53,7 +53,7 @@
           "client_id": "975837518429-c373gg0tgmoihfavv7glcfq717i2vcvl.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.u6amtech.flutter_sixvalley_ecommerce",
+            "package_name": "com.comjagatltd.laalsobuj.user_appmerce",
             "certificate_hash": "87f723e5721c8c8eb805f9a08bf95d5e1e0183b7"
           }
         },

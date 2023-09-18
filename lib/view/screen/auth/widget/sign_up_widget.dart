@@ -161,7 +161,7 @@ class SignUpWidgetState extends State<SignUpWidget> {
     Provider.of<SplashProvider>(context,listen: false).configModel;
     _countryDialCode = CountryCode.fromCountryCode(Provider.of<SplashProvider>(context, listen: false).configModel!.countryCode!).dialCode;
 
-
+    print("jjjjjjjjjjjjjjj: "+_countryDialCode.toString());
     _formKey = GlobalKey<FormState>();
   }
 
