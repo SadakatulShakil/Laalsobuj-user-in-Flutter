@@ -3,7 +3,7 @@ description: A new Flutter setup application for starting a project.
 
 publish_to: 'none'
 
-version: 1.0.1+2
+version: 1.0.1+4
 
 environment:
   sdk: '>=2.12.0 <3.0.0'
@@ -17,6 +17,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   get_it: ^7.2.0
   provider: ^6.0.3
+  package_info_plus: ^4.1.0
   connectivity: ^3.0.3
   dio: ^4.0.0-prev2
   http: ^0.13.5

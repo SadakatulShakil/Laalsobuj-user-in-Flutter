@@ -55,7 +55,7 @@ class SignUpWidgetState extends State<SignUpWidget> {
       String lastName = _lastNameController.text.trim();
       String email = _emailController.text.trim();
       String phone = _phoneController.text.trim();
-      String phoneNumber = _countryDialCode!+_phoneController.text.trim();
+      String phoneNumber = _countryDialCode!.substring(1)+_phoneController.text.trim();
       String password = _passwordController.text.trim();
       String confirmPassword = _confirmPasswordController.text.trim();
 

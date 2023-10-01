@@ -2,7 +2,7 @@ import 'package:flutter_sixvalley_ecommerce/data/model/response/language_model.d
 
 class AppConstants {
   static const String appName = 'LaalSobuj';
-  static const String appVersion = '14.0';
+  static const String appVersion = '1.0.4';
   static const String baseUrl = 'https://laalsobuj.comjagat.org';///changed 02/8/23
   static const String userId = 'userId';
   static const String name = 'name';

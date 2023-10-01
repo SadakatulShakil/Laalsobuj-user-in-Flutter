@@ -257,15 +257,15 @@ class _HomePageState extends State<HomePage> {
 
 
                           //top seller
-                          singleVendor?const SizedBox():
-                          TitleRow(title: getTranslated('top_seller', context),
-                            onTap: () {Navigator.push(context, MaterialPageRoute(builder: (_) => const AllTopSellerScreen(topSeller: null,)));},),
-                          singleVendor?const SizedBox(height: 0):const SizedBox(height: Dimensions.paddingSizeSmall),
-                          singleVendor?const SizedBox():
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: Dimensions.homePagePadding),
-                            child: TopSellerView(isHomePage: true),
-                          ),
+                          // singleVendor?const SizedBox():
+                          // TitleRow(title: getTranslated('top_seller', context),
+                          //   onTap: () {Navigator.push(context, MaterialPageRoute(builder: (_) => const AllTopSellerScreen(topSeller: null,)));},),
+                          // singleVendor?const SizedBox(height: 0):const SizedBox(height: Dimensions.paddingSizeSmall),
+                          // singleVendor?const SizedBox():
+                          // const Padding(
+                          //   padding: EdgeInsets.only(bottom: Dimensions.homePagePadding),
+                          //   child: TopSellerView(isHomePage: true),
+                          // ),
 
 
 
